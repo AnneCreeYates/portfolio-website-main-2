@@ -68,3 +68,43 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+<!-- My project structure -->
+my-portfolio/
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   ├── manifest.json
+│   ├── robots.txt
+│   └── data.json              # Optional static data
+├── src/
+│   ├── features/              # Feature-based folders
+│   │   ├── About/
+│   │   │   ├── ui/
+│   │   │   │   └── AboutSection.jsx
+│   │   │   └── About.module.css
+│   │   ├── Projects/
+│   │   │   ├── ui/
+│   │   │   │   ├── ProjectsList.jsx
+│   │   │   │   └── ProjectCard.jsx
+│   │   │   ├── projectsData.js
+│   │   │   └── Projects.module.css
+│   │   └── Contact/
+│   │       ├── ui/
+│   │       │   └── ContactForm.jsx
+│   │       └── Contact.module.css
+│   ├── shared/
+│   │   ├── ui/                # Reusable components (Button, SectionWrapper, etc.)
+│   │   ├── hooks/             # Global custom hooks
+│   │   ├── utils/             # Helper functions
+│   │   └── styles/            # Global styles (variables, resets)
+│   ├── App.js
+│   ├── App.css
+│   ├── App.test.js
+│   ├── index.js               # CRA entry point
+│   ├── index.css
+│   ├── reportWebVitals.js     # Optional performance tracking
+│   └── setupTests.js          # Jest setup
+├── package.json
+└── README.md
