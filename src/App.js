@@ -31,4 +31,6 @@ export default App;
 //  * About me section
 //  * My projects section
 //  * Contact section
-//  * Footer section
+// Footer section
+
+// Header and footer should be in a separate component and as a priority
