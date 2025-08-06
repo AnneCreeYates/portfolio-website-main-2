@@ -1,7 +1,4 @@
-import CardComponent from "./components/card/CardComponent";
-
 // const subject = "Tornados";
-
 // This is a comment outside the function
 
 function App(props) {
@@ -14,9 +11,6 @@ function App(props) {
         <p>I forgot to ask {props.greeting}</p>
       </header>
       <button type="button" className="primary">Click me. NOW!</button>
-      <CardComponent name="Project1" value="1" />
-      <CardComponent name="Project2" value="2"/>
-      <CardComponent name="Project2" value="3" />
     </>
   );
 }

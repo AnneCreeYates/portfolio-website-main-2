@@ -4,6 +4,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+Node verion: 24.5.0
+
+To run use:
+### `nvm use`
+
+Npm version: 11.5.1
 In the project directory, you can run:
 
 ### `npm start`
