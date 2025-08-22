@@ -1,0 +1,17 @@
+header {
+    width: 100%;
+    background-color: #95f0ea;
+    color:  #67E8F9;
+    /* to #818CF8; */
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 16px;
+    justify-content: space-around;
+
+    li {
+        padding: 8px;
+    }
+}
