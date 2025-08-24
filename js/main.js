@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     class BubbleConfigurator {
         configure(bubble) {
-            const size = Math.random() * 50 + 10; // Random size between 10 and 60
+            const size = Math.random() * 100 + 10; // Random size between 10 and 60
             const position = Math.random() * 100; // Random horizontal position
 
             bubble.style.width = `${size}px`;
@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     class BubbleAnimationManager {
         animate(bubble) {
-            const duration = Math.random() * 5 + 5;
-            const delay = Math.random() * -5;
-            bubble.style.animation = `float ${duration}s linear infinite ${delay}s`;
+            const duration = Math.random() * 25 + 45;
+            const delay = Math.random() * -25;
+            bubble.style.animation = `float ${duration}s ease-in infinite ${delay}s`;
             return bubble;
         }
     }
@@ -54,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const bubbleSystem = new BubbleController('.bubble-container', 20);
+    let numberOfBubbles = Math. trunc(Math. random() * 20);
+
+    const bubbleSystem = new BubbleController('.bubble-container', numberOfBubbles);
     bubbleSystem.init();
 });
