@@ -26,14 +26,8 @@ body {
 
 .bubble-container {
     position: absolute;
-}
 
-/* .bubble {
-    position: absolute;
-    background: radial-gradient(#67E8F9, #818CF8);
-    border-radius: 100%;
-    pointer-events: none;
-} */
+}
 
 .lava-lamp-canvas {
     position: absolute;

@@ -1,9 +1,10 @@
-import './css/styles.css'
-import './css/header-styles.css'
+import '../css/styles.css'
+import LavaLamp from './lava-lamp.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <h1>My Portfolio</h1>
-  </div>
-`
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.querySelector('.lava-lamp-canvas');
+    if (canvas) {
+        new LavaLamp(canvas);
+    }
+});
 

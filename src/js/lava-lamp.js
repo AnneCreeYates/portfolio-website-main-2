@@ -88,7 +88,4 @@ class LavaLamp {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.querySelector('.lava-lamp-canvas');
-    if (canvas) new LavaLamp(canvas);
-});
+export default LavaLamp;
