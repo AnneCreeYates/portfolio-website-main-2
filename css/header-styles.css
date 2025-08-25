@@ -1,5 +1,6 @@
 header {
     width: 100%;
+    height: fit-content;
     background-color: #95f0ea;
     color:  #67E8F9;
     /* to #818CF8; */
