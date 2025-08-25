@@ -1,6 +1,7 @@
 class LavaLamp {
     constructor(canvas) {
-        this.canvas = canvas;
+        this.container = document.querySelector('.lava-lamp-container');
+        this.canvas = document.querySelector('.lava-lamp-canvas');
         this.ctx = canvas.getContext('2d');
         this.blobs = [];
         this.numBlobs = 8;
@@ -68,9 +69,13 @@ class LavaLamp {
             blob.x += blob.speedX;
             blob.y += blob.speedY;
 
-            // Respawn if out of bounds
-            if (blob.x < -100 || blob.x > this.canvas.width + 100 ||
-                blob.y < -100 || blob.y > this.canvas.height + 100) {
+            // Bounce off walls
+            if (blob.x < blob.radius || blob.x > this.canvas.width - blob.radius) {
+    blob.speedX *= -0.1; // Reverse horizontal speed
+}
+
+            // Respoawn if out of bounds top or bottom
+            if (blob.y > this.canvas.height + 100 || blob.y < -100) {
                 this.blobs[i] = this.createBlob();
             }
 
