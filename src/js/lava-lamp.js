@@ -7,8 +7,8 @@ class LavaLamp {
         this.container = this.canvas.closest('.lava-lamp-container');
         this.ctx = canvas.getContext('2d');
         this.blobs = [];
-        this.numBlobs = 3; // MODIFIED: Reduced for better performance
-        this.pointsPerBlob = 15;
+        this.numBlobs = 3;
+        this.pointsPerBlob = 6;
         
         this.resize();
         this.init();
@@ -16,6 +16,7 @@ class LavaLamp {
     }
 
     resize() {
+        // this is for high-DPI screens, like Retina
         const dpr = window.devicePixelRatio || 1;
         this.canvas.width = this.canvas.offsetWidth * dpr;
         this.canvas.height = this.canvas.offsetHeight * dpr;
@@ -23,11 +24,12 @@ class LavaLamp {
     }
 
     createBlob() {
-        const radius = Math.random() * 20 + 40; // Range: 40px to 100px
+        const radius = Math.random() * 50 + 40; // Range: 40px to 100px
         const hue = Math.random() * 360;
         
-        // NEW: Smaller blobs move faster
-        const speedY = -(1.2 - (radius / 100)); // Larger radius (e.g., 100) = slower speed
+        // Smaller blobs move faster
+        // Larger radius (e.g., 100) = slower speed
+        const speedY = -(1.2 - (radius / 100)); 
 
         return {
             radius: radius,
@@ -35,7 +37,6 @@ class LavaLamp {
             y: this.canvas.offsetHeight + radius,
             speedY: speedY,
             color: `hsl(${hue}, 80%, 60%)`,
-            lightColor: `hsl(${hue}, 80%, 75%)`,
             
             // NEW: Unique properties for varied movement and shape
             xOffset: Math.random() * 1000,
@@ -51,11 +52,10 @@ class LavaLamp {
     }
     
     drawBlob(blob, t) {
-        const { x, y, radius, color, lightColor, morphSpeed } = blob;
+        const { x, y, radius, color, morphSpeed } = blob;
         const angleStep = (Math.PI * 2) / this.pointsPerBlob;
 
         const gradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
-        gradient.addColorStop(0, lightColor);
         gradient.addColorStop(1, color);
 
         this.ctx.save();
@@ -65,9 +65,18 @@ class LavaLamp {
         const points = [];
         for (let i = 0; i <= this.pointsPerBlob; i++) {
             const angle = i * angleStep;
-            // MODIFIED: Uses the blob's unique morphSpeed
-            const noiseFactor = this.noise2D(Math.cos(angle) + t * morphSpeed, Math.sin(angle) + t * morphSpeed);
-            const distortedRadius = radius + noiseFactor * (radius / 3);
+
+            // Sample simplex noise with lower frequency for smoothness
+            const noiseValue = this.noise2D(
+                Math.cos(angle) * 0.5 * t * morphSpeed,
+                Math.sin(angle) * 0.5 * t * morphSpeed
+            );
+
+            // Control amplitude (smaller factor = rounder blob)
+            const noiseFactor = noiseValue * (radius / 2); 
+
+            const distortedRadius = radius + noiseFactor;
+
             points.push({
                 x: Math.cos(angle) * distortedRadius,
                 y: Math.sin(angle) * distortedRadius,
@@ -108,7 +117,7 @@ class LavaLamp {
             this.drawBlob(blob, t);
         });
         
-        this.ctx.filter = 'none';
+        // this.ctx.filter = 'none';
         requestAnimationFrame((time) => this.animate(time));
     }
 }
