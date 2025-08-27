@@ -1,33 +1,47 @@
+import { createNoise2D } from 'simplex-noise';
+
 class LavaLamp {
     constructor(canvas) {
-        this.container = document.querySelector('.lava-lamp-container');
-        this.canvas = document.querySelector('.lava-lamp-canvas');
+        this.noise2D = createNoise2D();
+        this.canvas = canvas;
+        this.container = this.canvas.closest('.lava-lamp-container');
         this.ctx = canvas.getContext('2d');
         this.blobs = [];
-        this.numBlobs = 8;
-        this.pointsPerBlob = 8;
+        this.numBlobs = 3; // MODIFIED: Reduced for better performance
+        this.pointsPerBlob = 15;
+        
         this.resize();
         this.init();
         window.addEventListener('resize', () => this.resize());
     }
 
     resize() {
-        this.canvas.width = this.canvas.offsetWidth;
-        this.canvas.height = this.canvas.offsetHeight;
+        const dpr = window.devicePixelRatio || 1;
+        this.canvas.width = this.canvas.offsetWidth * dpr;
+        this.canvas.height = this.canvas.offsetHeight * dpr;
+        this.ctx.scale(dpr, dpr);
     }
 
     createBlob() {
-        const averageBubbleRadius = Math.random() * 30 + 30;
-        const color = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        const radius = Math.random() * 20 + 40; // Range: 40px to 100px
+        const hue = Math.random() * 360;
+        
+        // NEW: Smaller blobs move faster
+        const speedY = -(1.2 - (radius / 100)); // Larger radius (e.g., 100) = slower speed
+
         return {
-            x: Math.random() * this.canvas.width,
-            y: this.canvas.height + 5,
-            radius: averageBubbleRadius,
-            averageBubbleRadius,
-            speedX: Math.random() * 1.5 - 0.75,
-            speedY: -Math.random(),
-            phaseOffsets: Array.from({ length: this.pointsPerBlob }, () => Math.random() * Math.PI * 2),
-            color
+            radius: radius,
+            x: Math.random() * this.canvas.offsetWidth,
+            y: this.canvas.offsetHeight + radius,
+            speedY: speedY,
+            color: `hsl(${hue}, 80%, 60%)`,
+            lightColor: `hsl(${hue}, 80%, 75%)`,
+            
+            // NEW: Unique properties for varied movement and shape
+            xOffset: Math.random() * 1000,
+            driftStrength: Math.random() * 15 + 10,
+            morphSpeed: Math.random() * 0.00005 + 0.00005, // How fast it wobbles
+            driftTimeScale: Math.random() * 0.0001 + 0.0001, // How fast it drifts
         };
     }
 
@@ -35,55 +49,66 @@ class LavaLamp {
         this.blobs = Array.from({ length: this.numBlobs }, () => this.createBlob());
         this.animate();
     }
-
+    
     drawBlob(blob, t) {
-        const { x, y, averageBubbleRadius, phaseOffsets, color } = blob;
+        const { x, y, radius, color, lightColor, morphSpeed } = blob;
         const angleStep = (Math.PI * 2) / this.pointsPerBlob;
 
+        const gradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+        gradient.addColorStop(0, lightColor);
+        gradient.addColorStop(1, color);
+
+        this.ctx.save();
+        this.ctx.translate(x, y);
         this.ctx.beginPath();
-        for (let i = 0; i < this.pointsPerBlob; i++) {
+
+        const points = [];
+        for (let i = 0; i <= this.pointsPerBlob; i++) {
             const angle = i * angleStep;
-            const wave = Math.sin(t * 0.002 + phaseOffsets[i]) * 5;
-            const r = averageBubbleRadius + wave;
-            const px = x + Math.cos(angle) * r;
-            const py = y + Math.sin(angle) * r;
-            if (i === 0) {
-                this.ctx.moveTo(px, py);
-            } else {
-                this.ctx.lineTo(px, py);
-            }
+            // MODIFIED: Uses the blob's unique morphSpeed
+            const noiseFactor = this.noise2D(Math.cos(angle) + t * morphSpeed, Math.sin(angle) + t * morphSpeed);
+            const distortedRadius = radius + noiseFactor * (radius / 3);
+            points.push({
+                x: Math.cos(angle) * distortedRadius,
+                y: Math.sin(angle) * distortedRadius,
+            });
         }
+
+        this.ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 0; i < this.pointsPerBlob; i++) {
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const midPoint = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+            this.ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+        }
+        
         this.ctx.closePath();
-        this.ctx.fillStyle = color;
+        this.ctx.fillStyle = gradient;
         this.ctx.fill();
+        this.ctx.restore();
     }
 
     animate(t = 0) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.save();
-        // this.ctx.globalCompositeOperation = 'lighter';
-        // this.ctx.filter = 'blur(5px)';
-
+        
+        // MODIFIED: Reduced blur for huge performance gain
+        // this.ctx.filter = 'blur(2px)';
+        
         this.blobs.forEach((blob, i) => {
-            // Update position
-            blob.x += blob.speedX;
             blob.y += blob.speedY;
 
-            // Bounce off walls
-            if (blob.x < blob.radius || blob.x > this.canvas.width - blob.radius) {
-    blob.speedX *= -0.1; // Reverse horizontal speed
-}
+            // MODIFIED: Uses the blob's unique drift properties
+            const drift = this.noise2D(blob.y * 0.01, blob.xOffset + t * blob.driftTimeScale);
+            blob.x += drift * (blob.driftStrength / 100);
 
-            // Respoawn if out of bounds top or bottom
-            if (blob.y > this.canvas.height + 100 || blob.y < -100) {
+            if (blob.y < -blob.radius * 2) {
                 this.blobs[i] = this.createBlob();
             }
 
-            // Draw organic blob
             this.drawBlob(blob, t);
         });
-
-        this.ctx.restore();
+        
+        this.ctx.filter = 'none';
         requestAnimationFrame((time) => this.animate(time));
     }
 }
