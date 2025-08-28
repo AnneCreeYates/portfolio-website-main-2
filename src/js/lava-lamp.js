@@ -7,8 +7,8 @@ class LavaLamp {
         this.container = this.canvas.closest('.lava-lamp-container');
         this.ctx = canvas.getContext('2d');
         this.blobs = [];
-        this.numBlobs = 3;
-        this.pointsPerBlob = 6;
+        this.numBlobs = 5;
+        this.pointsPerBlob = 25;
         
         this.resize();
         this.init();
@@ -24,21 +24,21 @@ class LavaLamp {
     }
 
     createBlob() {
-        const radius = Math.random() * 50 + 40; // Range: 40px to 100px
-        const hue = Math.random() * 360;
+        const radius = (Math.random() * 100) + (Math.random() + 10);
+        const hue = Math.random() * 10 + 250; // 180-340 (cyan to pink)
         
         // Smaller blobs move faster
         // Larger radius (e.g., 100) = slower speed
-        const speedY = -(1.2 - (radius / 100)); 
+        const speedY = -(1.1 - (radius / 100)); 
 
         return {
             radius: radius,
             x: Math.random() * this.canvas.offsetWidth,
-            y: this.canvas.offsetHeight + radius,
+            y: this.canvas.offsetHeight + (Math.random(radius)),
             speedY: speedY,
             color: `hsl(${hue}, 80%, 60%)`,
             
-            // NEW: Unique properties for varied movement and shape
+            // Unique properties for varied movement and shape
             xOffset: Math.random() * 1000,
             driftStrength: Math.random() * 15 + 10,
             morphSpeed: Math.random() * 0.00005 + 0.00005, // How fast it wobbles
@@ -68,12 +68,12 @@ class LavaLamp {
 
             // Sample simplex noise with lower frequency for smoothness
             const noiseValue = this.noise2D(
-                Math.cos(angle) * 0.5 * t * morphSpeed,
-                Math.sin(angle) * 0.5 * t * morphSpeed
+                Math.cos(angle) * t * morphSpeed,
+                Math.sin(angle) * t * morphSpeed
             );
 
             // Control amplitude (smaller factor = rounder blob)
-            const noiseFactor = noiseValue * (radius / 2); 
+            const noiseFactor = noiseValue * (radius / 18);
 
             const distortedRadius = radius + noiseFactor;
 
@@ -108,7 +108,7 @@ class LavaLamp {
 
             // MODIFIED: Uses the blob's unique drift properties
             const drift = this.noise2D(blob.y * 0.01, blob.xOffset + t * blob.driftTimeScale);
-            blob.x += drift * (blob.driftStrength / 100);
+            blob.x += drift * (blob.driftStrength / 80);
 
             if (blob.y < -blob.radius * 2) {
                 this.blobs[i] = this.createBlob();
