@@ -1,0 +1,56 @@
+import js from '@eslint/js';
+import react from 'eslint-plugin-react';
+import security from 'eslint-plugin-security';
+
+export default [
+  {
+    ignores: ['node_modules/', 'dist/', 'build/']
+  },
+  {
+    files: ['**/*.js', '**/*.jsx'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
+      globals: {
+        console: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        fetch: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly'
+      }
+    },
+    plugins: {
+      react,
+      security
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...react.configs.recommended.rules,
+      ...security.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'warn',
+      'no-console': 'warn',
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'no-new-func': 'error',
+      'security/detect-eval-with-expression': 'warn',
+      'security/detect-unsafe-regex': 'warn'
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    }
+  }
+];

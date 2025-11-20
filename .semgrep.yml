@@ -1,0 +1,28 @@
+rules:
+  - id: eval-usage
+    pattern: eval(...)
+    message: eval() is dangerous and should be avoided
+    languages: [javascript]
+    severity: ERROR
+
+  - id: unsafe-dom-assignment
+    pattern-either:
+      - patterns:
+          - pattern: |
+              $OBJ.innerHTML = ...
+          - pattern-not: |
+              $OBJ.innerHTML = sanitize(...)
+      - patterns:
+          - pattern: |
+              $OBJ.outerHTML = ...
+          - pattern-not: |
+              $OBJ.outerHTML = sanitize(...)
+    message: Direct DOM innerHTML/outerHTML assignment can lead to XSS — use textContent or sanitize input
+    languages: [javascript]
+    severity: WARNING
+
+  - id: console-log-in-prod
+    pattern: console.log(...)
+    message: Remove console.log() from production code
+    languages: [javascript]
+    severity: INFO
