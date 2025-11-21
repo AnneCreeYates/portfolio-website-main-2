@@ -25,6 +25,6 @@ jobs:
         run: npm ci
 
       - name: Run Semgrep (community rules)
-        uses: returntocorp/semgrep-action@v1.13.0
+        uses: returntocorp/semgrep-action@v1
         with:
           config: 'auto'
