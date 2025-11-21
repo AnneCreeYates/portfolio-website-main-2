@@ -1,0 +1,192 @@
+rules:
+  # ============ CRITICAL VULNERABILITIES ============
+  - id: eval-usage
+    pattern: eval(...)
+    message: eval() is dangerous and should be avoided
+    languages: [javascript]
+    severity: ERROR
+
+  - id: function-constructor
+    pattern-either:
+      - pattern: new Function(...)
+      - pattern: Function(...)
+    message: Using Function constructor is similar to eval() and allows arbitrary code execution
+    languages: [javascript]
+    severity: ERROR
+
+  # ============ XSS VULNERABILITIES ============
+  - id: unsafe-dom-assignment
+    pattern-either:
+      - patterns:
+          - pattern: |
+              $OBJ.innerHTML = ...
+          - pattern-not: |
+              $OBJ.innerHTML = sanitize(...)
+      - patterns:
+          - pattern: |
+              $OBJ.outerHTML = ...
+          - pattern-not: |
+              $OBJ.outerHTML = sanitize(...)
+    message: Direct DOM innerHTML/outerHTML assignment can lead to XSS — use textContent or sanitize input
+    languages: [javascript]
+    severity: WARNING
+
+  - id: unsafe-insertadjacenthtml
+    pattern-either:
+      - pattern: $OBJ.insertAdjacentHTML(...)
+      - pattern: $OBJ.insertAdjacentElement(...)
+    message: insertAdjacentHTML() can be vulnerable to XSS if used with unsanitized input
+    languages: [javascript]
+    severity: WARNING
+
+  - id: unsafe-settextcontent-alternative
+    pattern: document.write(...)
+    message: document.write() is deprecated and can be exploited; use DOM methods instead
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ DANGEROUS FUNCTIONS ============
+  - id: console-log-in-prod
+    pattern: console.log(...)
+    message: Remove console.log() from production code
+    languages: [javascript]
+    severity: INFO
+
+  - id: json-parse-unsafe
+    pattern-either:
+      - patterns:
+          - pattern: JSON.parse(...)
+          - pattern-not: JSON.parse($STR)
+          - pattern-not-regex: JSON\.parse\("[^"]*"\)
+    message: JSON.parse() on untrusted input can be dangerous; validate/sanitize the source first
+    languages: [javascript]
+    severity: WARNING
+
+  - id: settimeout-eval-like
+    pattern-either:
+      - pattern: setTimeout("...", ...)
+      - pattern: setInterval("...", ...)
+    message: Passing strings to setTimeout/setInterval is like eval(); use named functions instead
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ HARDCODED SECRETS ============
+  - id: hardcoded-api-key
+    pattern-regex: '(api[_-]?key|apikey|api_secret|access_token|secret[_-]?key|password)\s*[:=]\s*["\x27][a-zA-Z0-9_\-]+["\x27]'
+    message: Potential hardcoded API key or secret detected — use environment variables instead
+    languages: [javascript]
+    severity: ERROR
+
+  - id: hardcoded-token
+    pattern-regex: '(token|secret|bearer)\s*[:=]\s*["\x27](?:Bearer\s+)?[a-zA-Z0-9_\-\.]{20,}["\x27]'
+    message: Potential hardcoded authentication token — use environment variables or secure storage
+    languages: [javascript]
+    severity: ERROR
+
+  # ============ REGEX DoS ============
+  - id: regex-dos-vulnerable
+    pattern-regex: '\.match\(.*[\*\+]\{.*\}\)' 
+    message: Potentially vulnerable regex pattern that could cause ReDoS (Regular Expression Denial of Service)
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ UNSAFE DESERIALIZATION ============
+  - id: unsafe-object-assign
+    pattern: Object.assign($TARGET, ...)
+    message: Object.assign() with untrusted sources can override critical properties; validate input
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ CORS & NETWORK ISSUES ============
+  - id: fetch-without-validation
+    pattern-either:
+      - pattern: fetch($URL, ...)
+      - pattern: fetch(...)
+    message: Ensure fetch requests validate the URL and handle responses securely
+    languages: [javascript]
+    severity: INFO
+
+  - id: credentials-in-url
+    pattern-regex: 'https?://[a-zA-Z0-9_]+:[a-zA-Z0-9_]+@'
+    message: Credentials should not be hardcoded in URLs; use authorization headers instead
+    languages: [javascript]
+    severity: ERROR
+
+  # ============ PROTOTYPE POLLUTION ============
+  - id: prototype-pollution-proto
+    pattern-either:
+      - pattern: $OBJ.__proto__ = ...
+      - pattern: $OBJ['__proto__'] = ...
+      - pattern: $OBJ["__proto__"] = ...
+    message: Direct __proto__ assignment enables prototype pollution attacks; use Object.setPrototypeOf() if needed
+    languages: [javascript]
+    severity: ERROR
+
+  - id: prototype-pollution-constructor
+    pattern: $OBJ.constructor.prototype = ...
+    message: Modifying constructor.prototype can pollute the prototype chain; use Object.setPrototypeOf() if needed
+    languages: [javascript]
+    severity: ERROR
+
+  # ============ DANGEROUS REDIRECTS & NAVIGATION ============
+  - id: unsafe-location-assignment
+    pattern-either:
+      - pattern: window.location = ...
+      - pattern: window.location.href = ...
+      - pattern: location.href = ...
+    message: Ensure URL is validated before redirecting; user input can lead to phishing or open redirect vulnerabilities
+    languages: [javascript]
+    severity: WARNING
+
+  - id: unsafe-location-redirect
+    pattern-either:
+      - pattern: window.location.replace(...)
+      - pattern: window.location.assign(...)
+    message: Validate redirect URLs to prevent open redirect attacks
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ CROSS-ORIGIN COMMUNICATION ============
+  - id: unsafe-postmessage
+    pattern-either:
+      - pattern: $OBJ.postMessage(..., "*")
+      - patterns:
+          - pattern: $OBJ.postMessage(...)
+          - pattern-not: $OBJ.postMessage(..., "...")
+    message: postMessage() with "*" origin allows any site to receive messages; specify exact origin instead
+    languages: [javascript]
+    severity: ERROR
+
+  # ============ SCRIPT INJECTION & EVAL VARIANTS ============
+  - id: dynamic-script-creation
+    pattern-either:
+      - pattern: document.createElement("script")
+      - pattern: new XMLHttpRequest()
+    message: Dynamically creating script tags or making XHR requests should use secure, validated sources only
+    languages: [javascript]
+    severity: INFO
+
+  - id: unsafe-innerhtml-with-concat
+    pattern-either:
+      - pattern: $OBJ.innerHTML = $A + $B
+      - pattern: $OBJ.innerHTML = `...` + ...
+      - pattern: $OBJ.innerHTML = $STR.concat(...)
+    message: Concatenating strings into innerHTML is vulnerable to XSS; use textContent or sanitize
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ LOCAL STORAGE / SESSION STORAGE RISKS ============
+  - id: sensitive-data-in-storage
+    pattern-either:
+      - pattern: localStorage.setItem("$KEY", $VALUE)
+      - pattern: sessionStorage.setItem("$KEY", $VALUE)
+    message: Ensure sensitive data (passwords, tokens, PII) is not stored in localStorage/sessionStorage
+    languages: [javascript]
+    severity: WARNING
+
+  # ============ MISSING INPUT VALIDATION ============
+  - id: unvalidated-regex-usage
+    pattern: new RegExp($INPUT, ...)
+    message: Creating regex from user input without validation can cause ReDoS or unexpected behavior
+    languages: [javascript]
+    severity: WARNING

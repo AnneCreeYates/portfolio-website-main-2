@@ -1,0 +1,70 @@
+version: 2
+updates:
+  # NPM dependencies - critical security and patch updates weekly
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    open-pull-requests-limit: 10
+    pull-request-branch-name:
+      separator: "/"
+    
+    # Prioritize security updates
+    allow:
+      - dependency-type: "all"
+    
+    # Group updates for cleaner PRs
+    groups:
+      security:
+        dependency-type: "direct"
+        update-types:
+          - "patch"
+          - "minor"
+        patterns:
+          - "*security*"
+          - "*vuln*"
+      patch:
+        dependency-type: "direct"
+        update-types:
+          - "patch"
+      minor:
+        dependency-type: "direct"
+        update-types:
+          - "minor"
+      dev-dependencies:
+        dependency-type: "dev"
+    
+    # Commit message customization
+    commit-message:
+      prefix: "chore(deps):"
+      include: "scope"
+    
+    # Automatically merge PRs for patch/minor versions of dev dependencies
+    auto-merge: true
+    auto-merge-type: "squash"
+    
+    # Trigger CI to run before merge
+    reviewers:
+      - "AnneCreeYates"
+    
+    # Skip dependencies that are known to have issues
+    ignore:
+      # Add any dependencies here that you want Dependabot to ignore
+      # - dependency-name: "some-package"
+      #   versions: ["1.0.0", "1.1.0"]
+
+  # GitHub Actions - keep workflows up-to-date
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(ci):"
+      include: "scope"
+    auto-merge: true
+    auto-merge-type: "squash"
