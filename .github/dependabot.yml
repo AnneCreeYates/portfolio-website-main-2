@@ -18,7 +18,7 @@ updates:
     # Group updates for cleaner PRs
     groups:
       security:
-        dependency-type: "direct"
+        dependency-type: "production"
         update-types:
           - "patch"
           - "minor"
@@ -26,15 +26,15 @@ updates:
           - "*security*"
           - "*vuln*"
       patch:
-        dependency-type: "direct"
+        dependency-type: "production"
         update-types:
           - "patch"
       minor:
-        dependency-type: "direct"
+        dependency-type: "production"
         update-types:
           - "minor"
       dev-dependencies:
-        dependency-type: "dev"
+        dependency-type: "development"
     
     # Commit message customization
     commit-message:
