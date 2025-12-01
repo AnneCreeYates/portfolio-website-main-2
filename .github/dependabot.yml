@@ -9,6 +9,7 @@ updates:
     - dependency-type: "production"
     open-pull-requests-limit: 5
     security-updates: true
+    target-branch: "dependabot/security-updates"
 
   # NPM dependencies - critical security and patch updates weekly
   - package-ecosystem: "npm"
