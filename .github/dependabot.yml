@@ -1,5 +1,15 @@
 version: 2
 updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"   # faster for security fixes only
+    # Only security updates here
+    allow:
+    - dependency-type: "production"
+    open-pull-requests-limit: 5
+    security-updates: true
+
   # NPM dependencies - critical security and patch updates weekly
   - package-ecosystem: "npm"
     directory: "/"
@@ -10,52 +20,33 @@ updates:
     open-pull-requests-limit: 10
     pull-request-branch-name:
       separator: "/"
-    
-    # Prioritize security updates
+
     allow:
-      - dependency-type: "all"
-    
-    # Group updates for cleaner PRs
+      - dependency-type: "production"
+      - dependency-type: "development"
+
     groups:
       security:
         dependency-type: "production"
-        update-types:
-          - "patch"
-          - "minor"
-        patterns:
-          - "*security*"
-          - "*vuln*"
+        update-types: ["patch", "minor"]
+        patterns: ["*security*", "*vuln*"]
       patch:
         dependency-type: "production"
-        update-types:
-          - "patch"
+        update-types: ["patch"]
       minor:
         dependency-type: "production"
-        update-types:
-          - "minor"
+        update-types: ["minor"]
       dev-dependencies:
         dependency-type: "development"
-    
-    # Commit message customization
+
     commit-message:
       prefix: "chore(deps):"
       include: "scope"
-    
-    # Automatically merge PRs for patch/minor versions of dev dependencies
-    auto-merge: true
-    auto-merge-type: "squash"
-    
-    # Trigger CI to run before merge
+
     reviewers:
       - "AnneCreeYates"
-    
-    # Skip dependencies that are known to have issues
-    ignore:
-      # Add any dependencies here that you want Dependabot to ignore
-      # - dependency-name: "some-package"
-      #   versions: ["1.0.0", "1.1.0"]
 
-  # GitHub Actions - keep workflows up-to-date
+  # GitHub Actions workflow updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -63,8 +54,7 @@ updates:
       day: "monday"
       time: "04:00"
     open-pull-requests-limit: 5
+    update-types: ["patch", "minor"]
     commit-message:
       prefix: "chore(ci):"
       include: "scope"
-    auto-merge: true
-    auto-merge-type: "squash"
