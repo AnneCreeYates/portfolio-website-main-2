@@ -1,17 +1,20 @@
 version: 2
 updates:
+  # --------------------------------------------------------
+  # 1. Daily lightweight production-only checks (security-focused)
+  # --------------------------------------------------------
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"   # faster for security fixes only
-    # Only security updates here
+      interval: "daily"
     allow:
-    - dependency-type: "production"
+      - dependency-type: "production"
     open-pull-requests-limit: 5
-    security-updates: true
     target-branch: "dependabot/security-updates"
 
-  # NPM dependencies - critical security and patch updates weekly
+  # --------------------------------------------------------
+  # 2. Weekly full update sweep with grouping
+  # --------------------------------------------------------
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -22,21 +25,20 @@ updates:
     pull-request-branch-name:
       separator: "/"
 
+    # Allow full update set
     allow:
       - dependency-type: "production"
       - dependency-type: "development"
 
+    # Group logical update sets (no update-type filtering)
     groups:
       security:
         dependency-type: "production"
-        update-types: ["patch", "minor"]
         patterns: ["*security*", "*vuln*"]
       patch:
         dependency-type: "production"
-        update-types: ["patch"]
       minor:
         dependency-type: "production"
-        update-types: ["minor"]
       dev-dependencies:
         dependency-type: "development"
 
@@ -47,7 +49,11 @@ updates:
     reviewers:
       - "AnneCreeYates"
 
-  # GitHub Actions workflow updates
+  # --------------------------------------------------------
+  # 3. Weekly GitHub Actions updates
+  # --------------------------------------------------------
+  # GitHub Actions DOES NOT SUPPORT update-types, groups, or allow
+  # Only schedule, commit-message, and PR limits are supported
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -55,7 +61,6 @@ updates:
       day: "monday"
       time: "04:00"
     open-pull-requests-limit: 5
-    update-types: ["patch", "minor"]
     commit-message:
       prefix: "chore(ci):"
       include: "scope"

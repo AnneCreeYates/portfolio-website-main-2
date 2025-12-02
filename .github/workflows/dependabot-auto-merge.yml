@@ -1,6 +1,8 @@
 name: Auto-merge Dependabot PRs
+
 on:
-  pull_request:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
 
 permissions:
   contents: write
@@ -9,15 +11,37 @@ permissions:
 jobs:
   automerge:
     runs-on: ubuntu-latest
-    if: >
+    
+    # Only run for Dependabot PRs that are safe to auto-merge
+    if: |
       github.actor == 'dependabot[bot]' &&
-      startsWith(github.event.pull_request.title, 'chore') &&
+      (
+        startsWith(github.event.pull_request.title, 'chore(deps)') ||
+        startsWith(github.event.pull_request.title, 'chore(ci)')
+      ) &&
       (
         contains(github.event.pull_request.title, 'patch') ||
         contains(github.event.pull_request.title, 'minor')
-      )
+      ) &&
+      github.event.pull_request.state == 'open'
 
     steps:
-      - uses: fastify/github-action-merge-dependabot@v3
+      # Optional: ensure CI checks passed (best practice)
+      - name: Wait for all required status checks to pass
+        uses: actions/github-script@v7
         with:
-          merge-method: squash  # or "merge" or "rebase"
+          script: |
+            const pr = context.payload.pull_request;
+            const checks = await github.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+            if (checks.data.check_runs.some(run => run.status !== "completed" || run.conclusion !== "success")) {
+              core.setFailed("Not all checks passed.");
+            }
+
+      - name: Auto-merge Dependabot PR
+        uses: fastify/github-action-merge-dependabot@v3
+        with:
+          merge-method: squash   # or "merge" or "rebase"
