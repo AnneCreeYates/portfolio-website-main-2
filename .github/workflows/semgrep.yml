@@ -9,6 +9,8 @@ on:
 jobs:
   semgrep:
     name: Run Semgrep
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
