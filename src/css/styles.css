@@ -1,0 +1,39 @@
+/* Global Styles */
+:root {
+    --primary-color: #67E8F9;
+    --secondary-color: #666;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 10rem auto;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    overflow-x: hidden;
+    background-color: #0F172A;
+    color: var(--primary-color);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bubble-container {
+    position: absolute;
+}
+
+.lava-lamp-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    pointer-events: none;
+    z-index: -1;
+}

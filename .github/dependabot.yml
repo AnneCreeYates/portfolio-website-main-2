@@ -1,6 +1,20 @@
 version: 2
 updates:
-  # NPM dependencies - critical security and patch updates weekly
+  # --------------------------------------------------------
+  # 1. Daily lightweight production-only checks (security-focused)
+  # --------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "production"
+    open-pull-requests-limit: 5
+    target-branch: "dependabot/security-updates"
+
+  # --------------------------------------------------------
+  # 2. Weekly full update sweep with grouping
+  # --------------------------------------------------------
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -10,52 +24,36 @@ updates:
     open-pull-requests-limit: 10
     pull-request-branch-name:
       separator: "/"
-    
-    # Prioritize security updates
+
+    # Allow full update set
     allow:
-      - dependency-type: "all"
-    
-    # Group updates for cleaner PRs
+      - dependency-type: "production"
+      - dependency-type: "development"
+
+    # Group logical update sets (no update-type filtering)
     groups:
       security:
-        dependency-type: "direct"
-        update-types:
-          - "patch"
-          - "minor"
-        patterns:
-          - "*security*"
-          - "*vuln*"
+        dependency-type: "production"
+        patterns: ["*security*", "*vuln*"]
       patch:
-        dependency-type: "direct"
-        update-types:
-          - "patch"
+        dependency-type: "production"
       minor:
-        dependency-type: "direct"
-        update-types:
-          - "minor"
+        dependency-type: "production"
       dev-dependencies:
-        dependency-type: "dev"
-    
-    # Commit message customization
+        dependency-type: "development"
+
     commit-message:
       prefix: "chore(deps):"
       include: "scope"
-    
-    # Automatically merge PRs for patch/minor versions of dev dependencies
-    auto-merge: true
-    auto-merge-type: "squash"
-    
-    # Trigger CI to run before merge
+
     reviewers:
       - "AnneCreeYates"
-    
-    # Skip dependencies that are known to have issues
-    ignore:
-      # Add any dependencies here that you want Dependabot to ignore
-      # - dependency-name: "some-package"
-      #   versions: ["1.0.0", "1.1.0"]
 
-  # GitHub Actions - keep workflows up-to-date
+  # --------------------------------------------------------
+  # 3. Weekly GitHub Actions updates
+  # --------------------------------------------------------
+  # GitHub Actions DOES NOT SUPPORT update-types, groups, or allow
+  # Only schedule, commit-message, and PR limits are supported
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -66,5 +64,3 @@ updates:
     commit-message:
       prefix: "chore(ci):"
       include: "scope"
-    auto-merge: true
-    auto-merge-type: "squash"
