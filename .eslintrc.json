@@ -4,35 +4,18 @@
     "es2021": true,
     "node": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:security/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:security/recommended"],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "security"
-  ],
+  "plugins": ["security"],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "warn",
     "no-console": "warn",
     "no-eval": "error",
     "no-implied-eval": "error",
     "no-new-func": "error",
     "security/detect-eval-with-expression": "warn",
     "security/detect-unsafe-regex": "warn"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
   }
 }
