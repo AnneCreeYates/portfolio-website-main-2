@@ -1,0 +1,9 @@
+/* Card Styles */
+
+.card {
+  width: fit-content;
+  height: auto;
+  padding: 3rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 15px;
+}
