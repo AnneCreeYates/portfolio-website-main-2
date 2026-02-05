@@ -1,8 +1,23 @@
 import "./card.css";
 
-export function createCard({ title, description, repoLink, livePageLink }) {
+export function createCard({
+  title,
+  imgSrc,
+  description,
+  repoLink,
+  livePageLink,
+}) {
   const card = document.createElement("div");
   card.classList.add("card");
+
+  const img = document.createElement("img");
+  img.src = imgSrc;
+  img.alt = title;
+  card.append(img);
+
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("card-content");
+  card.append(cardContent);
 
   const h3 = document.createElement("h3");
   h3.textContent = title;
@@ -10,20 +25,20 @@ export function createCard({ title, description, repoLink, livePageLink }) {
   const p = document.createElement("p");
   p.textContent = description;
 
-  card.append(h3, p);
+  cardContent.append(h3, p);
 
   if (repoLink) {
     const repoAnchor = document.createElement("a");
     repoAnchor.textContent = "GitHub";
     repoAnchor.href = repoLink;
-    card.append(repoAnchor);
+    cardContent.append(repoAnchor);
   }
 
   if (livePageLink) {
     const livePageAnchor = document.createElement("a");
     livePageAnchor.textContent = "Live Page";
     livePageAnchor.href = livePageLink;
-    card.append(livePageAnchor);
+    cardContent.append(livePageAnchor);
   }
 
   return card;
