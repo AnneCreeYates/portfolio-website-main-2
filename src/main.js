@@ -4,7 +4,7 @@ import "./components/header/header.js";
 import { createCard } from "./components/card/card.js";
 import { projects } from "./data/projects.js";
 
-const projectCard = document.getElementById("project-cards");
+const projectCard = document.getElementById("projects__cards");
 
 if (projectCard) {
   projects.forEach((project) => {

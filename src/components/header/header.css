@@ -1,6 +1,6 @@
 /* Header Styles */
 
-header {
+.header {
   width: 100%;
   height: fit-content;
   background-color: var(--primary-color);
@@ -8,7 +8,9 @@ header {
   /* to #818CF8; */
 }
 
-nav ul {
+/* Navigation */
+
+.nav__list {
   display: flex;
   list-style-type: none;
   padding: 16px;
