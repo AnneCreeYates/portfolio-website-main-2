@@ -1,5 +1,13 @@
-/* Global Styles */
+/* =========================================
+   1. GLOBAL VARIABLES & RESET
+   ========================================= */
+
 :root {
+  /* Spacing Variables */
+
+  --global-spacing-md: 1.5rem;
+  --global-spacing-lg: 2rem;
+
   /* Color Variables */
 
   --primary-color: #95f0ea;
@@ -17,9 +25,13 @@
   box-sizing: border-box;
 }
 
+/* =========================================
+   2. PAGE LAYOUT (The Skeleton)
+   ========================================= */
+
 body {
   display: grid;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header"
     "main"
@@ -27,6 +39,17 @@ body {
   overflow-x: hidden;
   background-color: var(--background-color);
   color: var(--primary-color);
-  height: 100vh;
+  min-height: 100vh;
   font-family: var(--font-family);
+}
+
+/* =========================================
+   3. SECTION LAYOUTS (The Grid)
+   ========================================= */
+
+.projects__container {
+  max-width: 1440px;
+  grid-area: main;
+  margin: 0 auto;
+  padding: 2rem;
 }
