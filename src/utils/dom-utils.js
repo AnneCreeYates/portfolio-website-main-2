@@ -56,7 +56,6 @@ export function createImage({ src, alt, className = "" }) {
   img.alt = alt;
   img.loading = "lazy";
 
-  // Clean, reusable logic
   img.onerror = () => {
     console.warn(`Image failed to load: ${src}`);
     img.style.display = "none";
