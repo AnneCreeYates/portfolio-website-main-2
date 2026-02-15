@@ -12,7 +12,7 @@
  * @returns {HTMLElement} The created DOM element.
  */
 
-export function createElement(tag, className = "", text = "") {
+export function createElement({ tag, className = "", text = "" }) {
   const element = document.createElement(tag);
 
   if (className) {
@@ -34,10 +34,33 @@ export function createElement(tag, className = "", text = "") {
  * @return {HTMLAnchorElement} The created anchor element.
  */
 
-export function createExternalLink(text, href, className = "") {
-  const link = createElement("a", className, text);
+export function createExternalLink({ text, href, className = "" }) {
+  const link = createElement({ tag: "a", className, text });
   link.href = href;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   return link;
+}
+
+/**
+ * Factory function top create images with built-in best praacticess
+ * @param {string} src - The source URL of the image.
+ * @param {string} alt - The alt text for the image.
+ * @param {string} [className] - An optional classname to add to the image.
+ * @returns {HTMLImageElement} The created image element.
+ */
+
+export function createImage({ src, alt, className = "" }) {
+  const img = createElement({ tag: "img", className });
+  img.src = src;
+  img.alt = alt;
+  img.loading = "lazy";
+
+  // Clean, reusable logic
+  img.onerror = () => {
+    console.warn(`Image failed to load: ${src}`);
+    img.style.display = "none";
+  };
+
+  return img;
 }

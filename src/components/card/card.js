@@ -1,4 +1,8 @@
-import { createElement, createExternalLink } from "../../utils/dom-utils.js";
+import {
+  createElement,
+  createExternalLink,
+  createImage,
+} from "../../utils/dom-utils.js";
 import "./card.css";
 
 export function createCard({
@@ -8,42 +12,57 @@ export function createCard({
   repoLink,
   livePageLink,
 }) {
-  const card = createElement("div", "card");
+  const card = createElement({ tag: "div", className: "card" });
 
-  const img = createElement("img", "card__image");
-  img.src = imgSrc;
-  img.alt = `Project screenshot for ${title}`;
-  img.loading = "lazy";
-
-  // Handle broken images
-  img.onerror = () => {
-    img.style.display = "none";
-  };
+  const img = createImage({
+    src: imgSrc,
+    alt: `${title} screenshot`,
+    className: "card__image",
+  });
 
   card.append(img);
 
-  const cardContent = createElement("div", "card__content");
+  const cardContent = createElement({ tag: "div", className: "card__content" });
   card.append(cardContent);
 
-  const h3 = createElement("h3", "card__title", title);
+  const h3 = createElement({
+    tag: "h3",
+    className: "card__title",
+    text: title,
+  });
 
-  const p = createElement("p", "card__description", description);
+  const p = createElement({
+    tag: "p",
+    className: "card__description",
+    text: description,
+  });
 
   cardContent.append(h3, p);
 
   // Only create the links container if at least one link is provided
 
   if (repoLink || livePageLink) {
-    const linkContainer = createElement("div", "card__links-container");
+    const linkContainer = createElement({
+      tag: "div",
+      className: "card__links-container",
+    });
 
     if (repoLink) {
       linkContainer.append(
-        createExternalLink("GitHub", repoLink, "card__link"),
+        createExternalLink({
+          text: "GitHub",
+          href: repoLink,
+          className: "card__link",
+        }),
       );
     }
     if (livePageLink) {
       linkContainer.append(
-        createExternalLink("Live Page", livePageLink, "card__link"),
+        createExternalLink({
+          text: "Live Page",
+          href: livePageLink,
+          className: "card__link",
+        }),
       );
     }
 
