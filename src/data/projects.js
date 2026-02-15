@@ -4,21 +4,24 @@ export const projects = [
   {
     title: "Project One",
     imgSrc: projectImgPlaceholder,
-    description: "Description here",
+    description:
+      "Lorem250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.Lorem250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.Lorem250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.Lorem250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.",
     repoLink: "#",
     livePageLink: "#",
   },
   {
     title: "Project Two",
     imgSrc: projectImgPlaceholder,
-    description: "Description and here",
+    description:
+      "Lorem 350 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate. Lorem 350 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.",
     repoLink: "#",
     livePageLink: "#",
   },
   {
     title: "Project Three",
     imgSrc: projectImgPlaceholder,
-    description: "Description and again here",
+    description:
+      "Lorem 250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate. Lorem 250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate. Lorem 250 ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.",
     repoLink: "#",
     livePageLink: "#",
   },

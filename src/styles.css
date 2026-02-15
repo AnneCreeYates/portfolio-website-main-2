@@ -12,7 +12,14 @@
 
   --primary-color: #95f0ea;
   --secondary-color: #67e8f9;
-  --background-color: #0f172a;
+  --background-color: #020617;
+
+  --global-text-color: #ecfbfcd3;
+  --global-text-color--white: #fff;
+
+  --global-surface-glass: rgba(15, 37, 42, 0.6);
+  --global-surface-border: #87fcf2;
+  --global-accent-glow: #4ade80;
 
   /* Font Variables */
 
@@ -38,7 +45,7 @@ body {
     "footer";
   overflow-x: hidden;
   background-color: var(--background-color);
-  color: var(--primary-color);
+  color: var(--global-text-color);
   min-height: 100vh;
   font-family: var(--font-family);
 }
