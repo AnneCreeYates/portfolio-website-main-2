@@ -1,60 +1,53 @@
+import { createElement, createExternalLink } from "../../utils/dom-utils.js";
 import "./card.css";
 
 export function createCard({
-  title,
+  title = "Untitled project",
   imgSrc,
-  description,
+  description = "No description available.",
   repoLink,
   livePageLink,
 }) {
-  const card = document.createElement("div");
-  card.classList.add("card");
+  const card = createElement("div", "card");
 
-  const img = document.createElement("img");
-  img.classList.add("card__image");
+  const img = createElement("img", "card__image");
   img.src = imgSrc;
   img.alt = `Project screenshot for ${title}`;
   img.loading = "lazy";
+
+  // Handle broken images
+  img.onerror = () => {
+    img.style.display = "none";
+  };
+
   card.append(img);
 
-  const cardContent = document.createElement("div");
-  cardContent.classList.add("card__content");
+  const cardContent = createElement("div", "card__content");
   card.append(cardContent);
 
-  const h3 = document.createElement("h3");
-  h3.classList.add("card__title");
-  h3.textContent = title;
+  const h3 = createElement("h3", "card__title", title);
 
-  const p = document.createElement("p");
-  p.classList.add("card__description");
-  p.textContent = description;
+  const p = createElement("p", "card__description", description);
 
   cardContent.append(h3, p);
 
-  // Helper function for the links
-
-  const createLink = (text, href) => {
-    const a = document.createElement("a");
-    a.classList.add("card__link");
-    a.textContent = text;
-    a.href = href;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    return a;
-  };
+  // Only create the links container if at least one link is provided
 
   if (repoLink || livePageLink) {
-    const linkContainer = document.createElement("div");
-    linkContainer.classList.add("card__links-container");
+    const linkContainer = createElement("div", "card__links-container");
 
     if (repoLink) {
-      linkContainer.append(createLink("GitHub", repoLink));
+      linkContainer.append(
+        createExternalLink("GitHub", repoLink, "card__link"),
+      );
     }
     if (livePageLink) {
-      linkContainer.append(createLink("Live Page", livePageLink));
-
-      cardContent.append(linkContainer);
+      linkContainer.append(
+        createExternalLink("Live Page", livePageLink, "card__link"),
+      );
     }
+
+    cardContent.append(linkContainer);
   }
 
   return card;

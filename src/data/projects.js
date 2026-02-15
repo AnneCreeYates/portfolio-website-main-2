@@ -11,14 +11,14 @@ export const projects = [
   {
     title: "Project Two",
     imgSrc: projectImgPlaceholder,
-    description: "Description here",
+    description: "Description and here",
     repoLink: "#",
     livePageLink: "#",
   },
   {
     title: "Project Three",
     imgSrc: projectImgPlaceholder,
-    description: "Description here",
+    description: "Description and again here",
     repoLink: "#",
     livePageLink: "#",
   },
