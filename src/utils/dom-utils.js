@@ -51,15 +51,77 @@ export function createExternalLink({ text, href, className = "" }) {
  */
 
 export function createImage({ src, alt, className = "" }) {
+  const imageContainer = createElement({
+    tag: "div",
+    className: "card__image-container",
+  });
+
   const img = createElement({ tag: "img", className });
   img.src = src;
   img.alt = alt;
   img.loading = "lazy";
+
+  imageContainer.append(img);
 
   img.onerror = () => {
     console.warn(`Image failed to load: ${src}`);
     img.style.display = "none";
   };
 
-  return img;
+  return imageContainer;
+}
+
+/**
+ * Creates a cluster of random of decorative squares around an element.
+ * @param {HTMLElement} parent - the container to which the squares will be added.
+ * @param {Object} options - Configuration options for the square cluster.
+ */
+
+export function createSquareCluster(
+  parent,
+  { count = 10, gridSize = 20 } = {},
+) {
+  for (let i = 0; i < count; i++) {
+    const square = createElement({
+      tag: "div",
+      className: "square-cluster-decor",
+    });
+
+    // 1. Only pick Top (0), Right (1), or Left (3)
+    // We skip Bottom (2) to keep the effect at the top
+    const edges = [0, 1, 3];
+    const edge = edges[Math.floor(Math.random() * edges.length)];
+
+    const thickness = 8; // Tight clump range in %
+    const offset = Math.random() * thickness - thickness / 2;
+
+    let x, y;
+
+    if (edge === 0) {
+      // Top Edge
+      x = Math.random() * 100;
+      y = offset;
+    } else if (edge === 1) {
+      // Right Edge (Top Half Only)
+      x = 100 + offset;
+      y = Math.random() * 50; // Restricted to top 50%
+    } else {
+      // Left Edge (Top Half Only)
+      x = offset;
+      y = Math.random() * 50; // Restricted to top 50%
+    }
+
+    const size = (Math.floor(Math.random() * 2) + 1) * (gridSize / 2);
+
+    Object.assign(square.style, {
+      left: `${x}%`,
+      top: `${y}%`,
+      width: `${size}px`,
+      height: `${size}px`,
+      transform: "translate(-50%, -50%)",
+      opacity: Math.random() * 0.7 + 0.3,
+    });
+
+    parent.append(square);
+  }
 }

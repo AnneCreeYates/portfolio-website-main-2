@@ -2,6 +2,7 @@ import {
   createElement,
   createExternalLink,
   createImage,
+  createSquareCluster,
 } from "../../utils/dom-utils.js";
 import "./card.css";
 
@@ -21,6 +22,11 @@ export function createCard({
   });
 
   card.append(img);
+
+  createSquareCluster(img, {
+    count: 20,
+    gridSize: 15, // Ensure this matches your CSS background-size
+  });
 
   const cardContent = createElement({ tag: "div", className: "card__content" });
   card.append(cardContent);

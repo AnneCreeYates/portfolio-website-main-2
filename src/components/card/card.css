@@ -14,28 +14,17 @@
   flex-direction: column;
   border-radius: 15px;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   gap: 1rem;
   background-color: var(--global-surface-glass);
 
-  background-image:
-    linear-gradient(rgba(74, 222, 128, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74, 222, 128, 0.05) 1px, transparent 1px);
-  background-size: 35px 35px;
-
-  /* box-shadow: */
-  /* 0 0 0.5rem #fff,
-    0 0 1rem #fff,
-    0 0 1.5rem #fff,
-    0 0 2.5rem var(--global-accent-glow),
-    0 0 4rem var(--global-accent-glow),
-    0 0 6rem var(--global-accent-glow), */
-  /* inset 0 0 0 0 #fff,
-    inset -10px 0 10px 0 #fff,
-    inset -15px 0 15px 0 #fff,
-    inset -20px 0 20px 0 var(--global-accent-glow),
-    inset -30px 0 30px 0 var(--global-accent-glow),
-    inset -45px 0 45px 0 var(--global-accent-glow); */
+  /* The green background gradient */
+  background: linear-gradient(
+    40deg,
+    var(--global-accent-glow) 0%,
+    var(--global-surface-glass) 23%,
+    transparent 60%
+  );
 
   &::before {
     content: "";
@@ -44,6 +33,7 @@
     border-radius: inherit;
     padding: 1.5px;
 
+    /* The incomplete border around the card */
     background: linear-gradient(
       30deg,
       var(--global-surface-border) 0%,
@@ -66,12 +56,11 @@
     border-radius: inherit;
     padding: 1.5px;
 
-    background: linear-gradient(
-      40deg,
-      var(--global-accent-glow) 0%,
-      var(--global-accent-glow) 23%,
-      transparent 60%
-    );
+    /* The grid pattern on the card background */
+    background-image:
+      linear-gradient(rgba(74, 222, 128, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74, 222, 128, 0.05) 1px, transparent 1px);
+    background-size: 35px 35px;
 
     bottom: -35rem;
     left: -70px;
@@ -86,9 +75,34 @@
   flex-grow: 1;
 }
 
-.card__image {
+.card__image-container {
+  display: flex;
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  justify-content: center;
+}
+
+.square-cluster-decor {
+  position: absolute;
+  /* Use a variable so we can easily change color later */
+  --pixel-color: var(--global-accent-glow);
+
+  background: var(--pixel-color);
+  box-shadow: 0 0 10px var(--pixel-color);
+  /* z-index: 10; */
+  pointer-events: none;
+}
+
+.square-cluster-decor:nth-child(3n) {
+  background: transparent;
+  border: 1.5px solid var(--pixel-color);
+  box-shadow: none;
+}
+
+.card__image {
+  width: 80%;
+
+  /* aspect-ratio: 16 / 9; */
   object-fit: cover;
 }
 
@@ -103,7 +117,6 @@
   margin: 0;
   opacity: 0.7;
   line-height: 1.6;
-  justify-content: space-between;
 }
 
 .card__links-container {
