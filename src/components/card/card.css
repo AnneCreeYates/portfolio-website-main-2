@@ -4,7 +4,7 @@
   display: grid;
   position: relative;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 3rem;
   margin-top: 1.5rem;
 }
 
@@ -18,13 +18,23 @@
   gap: 1rem;
   background-color: var(--global-surface-glass);
 
-  /* The green background gradient */
-  background: linear-gradient(
-    40deg,
-    var(--global-accent-glow) 0%,
-    var(--global-surface-glass) 23%,
-    transparent 60%
-  );
+  background: 
+  /* 1. The Grid (Top Layer) */
+    linear-gradient(rgba(74, 222, 128, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 222, 128, 0.05) 1px, transparent 1px),
+    /* 2. The Accent Glow (Bottom Layer) */
+    linear-gradient(
+        40deg,
+        var(--global-accent-glow) 0%,
+        var(--global-surface-glass) 23%,
+        transparent 60%
+      );
+
+  /* Keep your size separate to ensure it only applies to the grid layers */
+  background-size:
+    35px 35px,
+    35px 35px,
+    auto;
 
   &::before {
     content: "";
@@ -54,13 +64,9 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
+    pointer-events: none;
+    z-index: inherit;
     padding: 1.5px;
-
-    /* The grid pattern on the card background */
-    background-image:
-      linear-gradient(rgba(74, 222, 128, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(74, 222, 128, 0.05) 1px, transparent 1px);
-    background-size: 35px 35px;
 
     bottom: -35rem;
     left: -70px;
@@ -89,7 +95,6 @@
 
   background: var(--pixel-color);
   box-shadow: 0 0 10px var(--pixel-color);
-  /* z-index: 10; */
   pointer-events: none;
 }
 
@@ -101,7 +106,6 @@
 
 .card__image {
   width: 80%;
-
   /* aspect-ratio: 16 / 9; */
   object-fit: cover;
 }
