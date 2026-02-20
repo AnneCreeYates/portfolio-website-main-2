@@ -84,7 +84,7 @@ export function createSquareCluster(
   for (let i = 0; i < count; i++) {
     const square = createElement({
       tag: "div",
-      className: "square-cluster-decor",
+      className: "decor--square-cluster",
     });
 
     // 1. Only pick Top (0), Right (1), or Left (3)

@@ -60,3 +60,23 @@ body {
   margin: 0 auto;
   padding: 2rem;
 }
+
+/* =========================================
+   4. UTILITY CLASSES
+   ========================================= */
+
+.decor--square-cluster {
+  position: absolute;
+  /* Use a variable so we can easily change color later */
+  --pixel-color: var(--global-accent-glow);
+
+  background: var(--pixel-color);
+  box-shadow: 0 0 10px var(--pixel-color);
+  pointer-events: none;
+}
+
+.decor--square-cluster:nth-child(3n) {
+  background: transparent;
+  border: 1.5px solid var(--pixel-color);
+  box-shadow: none;
+}
