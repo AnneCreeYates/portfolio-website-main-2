@@ -30,32 +30,12 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...security.configs.recommended.rules,
-      ...importPlugin.configs.recommended.rules,
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "no-eval": "error",
       "no-implied-eval": "error",
       "no-new-func": "error",
       "security/detect-eval-with-expression": "warn",
       "security/detect-unsafe-regex": "warn",
-      "import/no-unresolved": "warn",
-      "import/no-unused-modules": "warn",
-      "import/order": [
-        "warn",
-        {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-          ],
-          alphabetize: {
-            order: "asc",
-            caseInsensitive: true,
-          },
-        },
-      ],
     },
   },
 ];
