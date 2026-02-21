@@ -25,7 +25,7 @@
     /* 2. The Accent Glow (Bottom Layer) */
     linear-gradient(
         40deg,
-        var(--global-accent-glow) 0%,
+        var(--global-accent-glow) -35%,
         var(--global-surface-glass) 23%,
         transparent 60%
       );
