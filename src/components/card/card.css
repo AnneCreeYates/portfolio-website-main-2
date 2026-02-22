@@ -111,13 +111,9 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
-}
-
-.card__link {
-  text-align: center;
-  color: var(--global-text-color);
-  text-decoration: none;
-  padding: 0.4rem 1rem;
-  border: 2px solid var(--primary-color);
-  border-radius: 25px;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+  padding: 20px 0;
 }

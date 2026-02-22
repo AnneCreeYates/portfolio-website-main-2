@@ -16,7 +16,9 @@ export function createElement({ tag, className = "", text = "" }) {
   const element = document.createElement(tag);
 
   if (className) {
-    element.classList.add(className);
+    // Split by space and filter out any empty strings to avoid adding empty class names - this allows for multiple classes to be added if provided as a space-separated string (used Boolean to check for truthy value, so it will work with empty strings, null, or undefined)
+    const classes = className.split(" ").filter(Boolean);
+    element.classList.add(...classes);
   }
 
   if (text) {

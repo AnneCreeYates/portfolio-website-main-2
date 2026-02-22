@@ -1,0 +1,11 @@
+/* Button styles */
+
+.button {
+  text-align: center;
+  color: var(--global-text-color);
+  text-decoration: none;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--global-accent-glow);
+  border-radius: 10px;
+  width: 50%;
+}

@@ -1,9 +1,9 @@
 import {
   createElement,
-  createExternalLink,
   createImage,
   createSquareCluster,
 } from "../../utils/dom-utils.js";
+import { createButton } from "../button/button.js";
 import "./card.css";
 
 export function createCard({
@@ -55,19 +55,19 @@ export function createCard({
 
     if (repoLink) {
       linkContainer.append(
-        createExternalLink({
+        createButton({
           text: "GitHub",
           href: repoLink,
-          className: "card__link",
+          className: "button",
         }),
       );
     }
     if (livePageLink) {
       linkContainer.append(
-        createExternalLink({
+        createButton({
           text: "Live Page",
           href: livePageLink,
-          className: "card__link",
+          className: "button",
         }),
       );
     }
