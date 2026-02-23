@@ -1,10 +1,9 @@
-import {
-  createElement,
-  createImage,
-  createSquareCluster,
-} from "../../utils/dom-utils.js";
+
+import { createElement, createImage } from "../../utils/dom-utils.js";
 import { createButton } from "../button/button.js";
+import { createSquareCluster } from "../decor-square-clusters/decor-square-cluster.js";
 import "./card.css";
+import "../decor-square-clusters/decor-square-cluster.css";
 
 export function createCard({
   title = "Untitled project",

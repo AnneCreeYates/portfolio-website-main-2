@@ -1,0 +1,15 @@
+/* Decorative square cluster
+ styles */
+
+.decor--square-cluster {
+  position: absolute;
+  background: var(--global-accent-glow);
+  box-shadow: 0 0 10px var(--global-accent-glow);
+  pointer-events: none;
+}
+
+.decor--square-cluster:nth-child(3n) {
+  background: transparent;
+  border: 1.5px solid var(--global-accent-glow);
+  box-shadow: none;
+}
