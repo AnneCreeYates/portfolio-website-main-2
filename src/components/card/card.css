@@ -92,6 +92,7 @@
   width: 80%;
   /* aspect-ratio: 16 / 9; */
   object-fit: cover;
+  margin-top: 1.5rem;
 }
 
 .card__title {

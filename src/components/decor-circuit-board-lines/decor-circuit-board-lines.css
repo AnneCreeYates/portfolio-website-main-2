@@ -1,0 +1,34 @@
+/* Decor Circuit Board Lines Styles */
+
+.decor-circuit-board-container {
+  display: flex;
+  position: relative;
+}
+
+.decor-circuit-board-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--global-color--primary),
+    transparent
+  );
+
+  &--horizontal {
+    top: 50%;
+    height: 2px;
+    outline: red 3px solid;
+  }
+
+  &--skewed-right {
+    top: 50%;
+    transform: rotate(15deg);
+  }
+
+  &--skewed-left {
+    top: 50%;
+    transform: rotate(-15deg);
+  }
+}

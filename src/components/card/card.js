@@ -1,4 +1,3 @@
-
 import { createElement, createImage } from "../../utils/dom-utils.js";
 import { createButton } from "../button/button.js";
 import { createSquareCluster } from "../decor-square-clusters/decor-square-cluster.js";

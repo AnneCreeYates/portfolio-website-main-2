@@ -9,6 +9,6 @@ const projectCard = document.getElementById("projects__cards");
 if (projectCard) {
   projects.forEach((project) => {
     let card = createCard(project);
-    projectCard.appendChild(card);
+    projectCard.append(card);
   });
 }
