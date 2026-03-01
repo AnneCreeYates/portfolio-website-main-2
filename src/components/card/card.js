@@ -3,6 +3,7 @@ import { createButton } from "../button/button.js";
 import { createSquareCluster } from "../decor-square-clusters/decor-square-cluster.js";
 import "./card.css";
 import "../decor-square-clusters/decor-square-cluster.css";
+import "../../themes/default/default-theme.css";
 
 export function createCard({
   title = "Untitled project",
@@ -56,7 +57,7 @@ export function createCard({
         createButton({
           text: "GitHub",
           href: repoLink,
-          className: "button",
+          className: "button button-default",
         }),
       );
     }
@@ -65,7 +66,7 @@ export function createCard({
         createButton({
           text: "Live Page",
           href: livePageLink,
-          className: "button",
+          className: "button button-default",
         }),
       );
     }
