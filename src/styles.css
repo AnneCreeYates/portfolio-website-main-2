@@ -2,29 +2,9 @@
    1. GLOBAL VARIABLES & RESET
    ========================================= */
 
-:root {
-  /* Spacing Variables */
-
-  --global-spacing-md: 1.5rem;
-  --global-spacing-lg: 2rem;
-
-  /* Color Variables */
-
-  --primary-color: #95f0ea;
-  --secondary-color: #67e8f9;
-  --background-color: #020617;
-
-  --global-text-color: #ecfbfcd3;
-  --global-text-color--white: #fff;
-
-  --global-surface-glass: #18363c99;
-  --global-surface-border: #87fcf2;
-  --global-accent-glow: #4ade80;
-
-  /* Font Variables */
-
-  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+/* Theme tokens moved to `src/themes/default/default-theme.css`
+   Keep any layout or utility rules here; design tokens (colors, spacing,
+   font family) are provided by the theme. */
 
 * {
   margin: 0;
@@ -44,8 +24,8 @@ body {
     "main"
     "footer";
   overflow-x: hidden;
-  background-color: var(--background-color);
-  color: var(--global-text-color);
+  background-color: var(--color-background);
+  color: var(--color-text);
   min-height: 100vh;
   font-family: var(--font-family);
 }

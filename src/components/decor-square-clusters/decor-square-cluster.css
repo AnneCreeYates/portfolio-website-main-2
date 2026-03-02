@@ -3,13 +3,13 @@
 
 .decor--square-cluster {
   position: absolute;
-  background: var(--global-accent-glow);
-  box-shadow: 0 0 10px var(--global-accent-glow);
+  background: var(--color-primary-glow);
+  box-shadow: 0 0 10px var(--color-primary-glow);
   pointer-events: none;
 }
 
 .decor--square-cluster:nth-child(3n) {
   background: transparent;
-  border: 1.5px solid var(--global-accent-glow);
+  border: 1.5px solid var(--color-primary-glow);
   box-shadow: none;
 }

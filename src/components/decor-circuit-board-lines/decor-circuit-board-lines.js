@@ -3,7 +3,7 @@ import "./decor-circuit-board-lines.css";
 
 export function createDecorCircuitBoardLines({
   direction,
-  // color = "var(--global-color--primary)",
+  // color = "var(--color-primary)",
 }) {
   const decorContainer = createElement({
     tag: "div",

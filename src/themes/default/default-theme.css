@@ -1,24 +1,75 @@
-/* Default heme styles */
+/* Default theme styles */
 
 :root {
-  --default-theme-background-color: #ecfbfcd3;
-  --default-theme-text-color: #ecfbfcd3;
-  --default-theme-accent-color: #4ade80;
-  --default-theme-accent-glow: #9be3ad;
+  /* Palette (raw swatches) */
+  --palette-accent-500: #4ade80;
+  --palette-accent-300: #00bf30;
+  --palette-primary-500: #50cfab;
+  --palette-secondary-500: #04846a;
+  --palette-surface-glass: #010708;
+  --palette-surface-border: #3b775d;
+
+  /* Semantic tokens (site-level) */
+  --color-background: #020e0f;
+  --color-text: #ecfbfcd3;
+  --color-primary: var(--palette-accent-500);
+  --color-primary-glow: var(--palette-accent-300);
+  --color-secondary: var(--palette-secondary-500);
+  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.button-default {
-  color: var(--default-theme-text-color);
+/* Surface semantic token */
+:root {
+  --surface-glass: var(--palette-surface-glass);
+}
+
+/* Surface border and text white token for migration */
+:root {
+  --surface-border: var(--palette-surface-border);
+  --color-text-white: #fff;
+}
+
+/* Utilities: spacing, typography, radii */
+:root {
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+
+  --radius-base: 10px;
+}
+
+/* Button design tokens and base styles (theme-level defaults) */
+:root {
+  --button-text-color: var(--color-text);
+  --button-padding: 0.4rem 1rem;
+  --button-border-color: var(--color-primary-glow);
+  --button-border-width: 2px;
+  --button-border-radius: 10px;
+  --button-width: 50%;
+}
+
+.button {
+  color: var(--button-text-color);
   text-decoration: none;
-  padding: 0.4rem 1rem;
-  border: 2px solid var(--default-theme-accent-glow);
+  padding: var(--button-padding);
+  border: var(--button-border-width) solid var(--button-border-color);
+  border-radius: var(--button-border-radius);
+  width: var(--button-width);
+}
 
-  /* Button neon glow effect */
-  /* box-shadow:
-    inset -7px 2px 5px var(--default-theme-accent-glow),
-    5px -5px 0 var(--default-theme-accent-color); */
-
-  text-shadow:
-    0 0 5px var(--default-theme-accent-glow),
-    0 0 15px var(--default-theme-accent-color);
+/* Card tokens */
+:root {
+  --card-radius: 15px;
+  --card-gap: 1rem;
+  --card-content-padding: 0 2rem 2rem;
+  --card-image-width: 80%;
+  --card-title-font-size: 1.6rem;
+  --card-description-opacity: 0.7;
+  --card-links-gap: 1rem;
+  --card-links-top-margin: 1.25rem;
 }

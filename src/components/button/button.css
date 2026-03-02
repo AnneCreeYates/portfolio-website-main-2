@@ -1,11 +1,5 @@
-/* Button styles */
+/* Button styles (structural only) */
 
 .button {
   text-align: center;
-  color: var(--global-text-color);
-  text-decoration: none;
-  padding: 0.4rem 1rem;
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  width: 50%;
 }

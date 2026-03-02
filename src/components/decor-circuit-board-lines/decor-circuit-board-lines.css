@@ -12,14 +12,13 @@
   background: linear-gradient(
     to right,
     transparent,
-    var(--global-color--primary),
+    var(--color-primary),
     transparent
   );
 
   &--horizontal {
     top: 50%;
     height: 2px;
-    outline: red 3px solid;
   }
 
   &--skewed-right {

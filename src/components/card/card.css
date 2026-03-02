@@ -12,11 +12,11 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  border-radius: 15px;
+  border-radius: var(--card-radius);
   padding: 0;
   overflow: visible;
-  gap: 1rem;
-  background-color: var(--global-surface-glass);
+  gap: var(--card-gap);
+  background-color: var(--surface-glass);
 
   background: 
   /* 1. The Grid (Top Layer) */
@@ -25,8 +25,8 @@
     /* 2. The Accent Glow (Bottom Layer) */
     linear-gradient(
         40deg,
-        var(--global-accent-glow) -35%,
-        var(--global-surface-glass) 23%,
+        var(--color-primary-glow) -35%,
+        var(--surface-glass) 23%,
         transparent 60%
       );
 
@@ -46,8 +46,8 @@
     /* The incomplete border around the card */
     background: linear-gradient(
       30deg,
-      var(--global-surface-border) 0%,
-      var(--global-accent-glow) 20%,
+      var(--surface-border) 0%,
+      var(--color-primary-glow) 20%,
       transparent 80%
     );
 
@@ -74,10 +74,10 @@
 }
 
 .card__content {
-  padding: 0 2rem 2rem;
+  padding: var(--card-content-padding);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--card-gap);
   flex-grow: 1;
 }
 
@@ -89,32 +89,31 @@
 }
 
 .card__image {
-  width: 80%;
+  width: var(--card-image-width);
   /* aspect-ratio: 16 / 9; */
   object-fit: cover;
   margin-top: 1.5rem;
 }
 
 .card__title {
-  font-size: 1.6rem;
-  color: var(--global-text-color--white);
+  font-size: var(--card-title-font-size);
+  color: var(--color-text-white);
   margin: 0;
 }
 
 .card__description {
   flex-grow: 1;
   margin: 0;
-  opacity: 0.7;
+  opacity: var(--card-description-opacity);
   line-height: 1.6;
 }
 
 .card__links-container {
   display: flex;
-  gap: 1rem;
+  gap: var(--card-links-gap);
   flex-direction: column;
-  gap: 20px;
   align-items: center;
-  margin-top: 20px;
+  margin-top: var(--card-links-top-margin);
   position: relative;
   /* padding: 20px 0; */
 }
