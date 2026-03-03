@@ -10,8 +10,8 @@ This folder contains theme-level CSS variables (design tokens).
 ## Token categories
 
 - Palette tokens: raw swatches you should not use directly in components unless necessary.
-  - `--palette-accent-500` - primary accent color
-  - `--palette-accent-300` - lighter accent / glow
+  - `--palette-accent-400` - primary accent color
+  - `--palette-accent-500` - lighter accent / glow
 
 - Semantic tokens: use these in component CSS. Themes should redefine these.
   - `--color-background` - app background or main surface
@@ -35,7 +35,7 @@ This folder contains theme-level CSS variables (design tokens).
 
 ## Color scale (palette naming)
 
-We follow a numeric shade scale for palette tokens (e.g. `--palette-accent-300`, `--palette-accent-500`).
+We follow a numeric shade scale for palette tokens (e.g. `--palette-accent-500`, `--palette-accent-400`).
 
 - `100–300`: lighter tints (use for glows, backgrounds, subtle borders)
 - `400–600`: base tones (500 is typically the brand/base color)

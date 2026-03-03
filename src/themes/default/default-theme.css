@@ -2,8 +2,8 @@
 
 :root {
   /* Palette (raw swatches) */
-  --palette-accent-500: #4ade80;
-  --palette-accent-300: #00bf30;
+  --palette-accent-400: #4ade80;
+  --palette-accent-500: #00bf30;
   --palette-primary-500: #50cfab;
   --palette-secondary-500: #04846a;
   --palette-surface-glass: #010708;
@@ -12,8 +12,8 @@
   /* Semantic tokens (site-level) */
   --color-background: #020e0f;
   --color-text: #ecfbfcd3;
-  --color-primary: var(--palette-accent-500);
-  --color-primary-glow: var(--palette-accent-300);
+  --color-primary: var(--palette-accent-400);
+  --color-primary-glow: var(--palette-accent-500);
   --color-secondary: var(--palette-secondary-500);
   --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
