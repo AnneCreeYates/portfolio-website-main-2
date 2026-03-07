@@ -24,10 +24,7 @@ body {
     "main"
     "footer";
   overflow-x: hidden;
-  background-color: var(--color-background);
-  color: var(--color-text);
   min-height: 100vh;
-  font-family: var(--font-family);
 }
 
 /* =========================================
@@ -38,7 +35,7 @@ body {
   max-width: 1440px;
   grid-area: main;
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--space-lg);
 }
 
 /* =========================================

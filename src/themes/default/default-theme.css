@@ -53,15 +53,6 @@
   --button-width: 50%;
 }
 
-.button {
-  color: var(--button-text-color);
-  text-decoration: none;
-  padding: var(--button-padding);
-  border: var(--button-border-width) solid var(--button-border-color);
-  border-radius: var(--button-border-radius);
-  width: var(--button-width);
-}
-
 /* Card tokens */
 :root {
   --card-radius: 15px;
@@ -72,4 +63,23 @@
   --card-description-opacity: 0.7;
   --card-links-gap: 1rem;
   --card-links-top-margin: 1.25rem;
+}
+
+/* Body styles */
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+/* Button styles */
+
+.button {
+  color: var(--button-text-color);
+  text-decoration: none;
+  padding: var(--button-padding);
+  border: var(--button-border-width) solid var(--button-border-color);
+  border-radius: var(--button-border-radius);
+  width: var(--button-width);
 }
