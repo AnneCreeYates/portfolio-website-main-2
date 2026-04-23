@@ -1,33 +1,18 @@
 /* Decor Circuit Board Lines Styles */
 
-.decor-circuit-board-container {
-  display: flex;
-  position: relative;
-}
-
-.decor-circuit-board-line {
+.decor-circuit-board-lines-container {
   position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--color-primary),
-    transparent
-  );
-
-  &--horizontal {
-    top: 50%;
-    height: 2px;
-  }
-
-  &--skewed-right {
-    top: 50%;
-    transform: rotate(15deg);
-  }
-
-  &--skewed-left {
-    top: 50%;
-    transform: rotate(-15deg);
-  }
+  height: auto;
+  pointer-events: none;
 }
+/* 
+.decor-circuit-board-lines-svg {
+  position: relative;
+  width: 120%;
+  opacity: 1;
+  outline: 3px solid pink;
+} */
