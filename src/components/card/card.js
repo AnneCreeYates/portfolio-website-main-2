@@ -1,7 +1,6 @@
 import { createElement, createImage } from "../../utils/dom-utils.js";
 import { createButton } from "../button/button.js";
 import { createSquareCluster } from "../decor-square-clusters/decor-square-cluster.js";
-import { createDecorCircuitBoardLines } from "../decor-circuit-board-lines/decor-circuit-board-lines.js";
 import "./card.css";
 
 export function createCard({
@@ -42,9 +41,6 @@ export function createCard({
   });
 
   cardContent.append(h3, p);
-
-  const circuitBoardDecoration = createDecorCircuitBoardLines();
-  card.append(circuitBoardDecoration);
 
   // Only create the links container if at least one link is provided
 
