@@ -109,9 +109,9 @@
 }
 
 .card__links-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--card-links-gap);
-  flex-direction: column;
   align-items: center;
   margin-top: var(--card-links-top-margin);
   position: relative;

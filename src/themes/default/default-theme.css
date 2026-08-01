@@ -11,7 +11,7 @@
 
   /* Semantic tokens (site-level) */
   --color-background: #020e0f;
-  --color-text: #ecfbfcd3;
+  --color-text: #fff;
   --color-primary: var(--palette-accent-400);
   --color-primary-glow: var(--palette-accent-500);
   --color-secondary: var(--palette-secondary-500);
@@ -81,5 +81,16 @@ body {
   padding: var(--button-padding);
   border: var(--button-border-width) solid var(--button-border-color);
   border-radius: var(--button-border-radius);
-  width: var(--button-width);
+  /* width: var(--button-width); */
+  background-color: var();
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    background-color: var(--color-primary-glow);
+    color: var(--color-background);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
 }

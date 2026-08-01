@@ -54,6 +54,7 @@ export function createCard({
       linkContainer.append(
         createButton({
           text: "GitHub",
+          label: "Open GitHub repository",
           href: repoLink,
           className: "button button-default",
         }),
@@ -62,7 +63,8 @@ export function createCard({
     if (livePageLink) {
       linkContainer.append(
         createButton({
-          text: "Live Page",
+          text: "Demo",
+          label: "Open live demo",
           href: livePageLink,
           className: "button button-default",
         }),

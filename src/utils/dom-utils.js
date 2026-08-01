@@ -18,6 +18,7 @@ export function createElement({
   className = "",
   text = "",
   attributes = {},
+  ariaLabel = "",
 }) {
   // SVG tags that need to be created in the SVG namespace
   const svgTags = [
@@ -53,6 +54,10 @@ export function createElement({
     element.textContent = text;
   }
 
+  if (ariaLabel) {
+    element.setAttribute("aria-label", ariaLabel);
+  }
+
   // Set attributes
   for (const [key, value] of Object.entries(attributes)) {
     element.setAttribute(key, value);
@@ -69,8 +74,8 @@ export function createElement({
  * @return {HTMLAnchorElement} The created anchor element.
  */
 
-export function createExternalLink({ text, href, className = "" }) {
-  const link = createElement({ tag: "a", className, text });
+export function createExternalLink({ text, href, className = "", label = "" }) {
+  const link = createElement({ tag: "a", className, text, ariaLabel: label });
   link.href = href;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
