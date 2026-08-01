@@ -5,22 +5,62 @@
  */
 
 /**
- * Generic helper to create DOM elements with clasess and text.
+ * Generic helper to create DOM elements with classes, text, and attributes.
  * @param {string} tag - The HTML tag to create (e.g., 'div', 'p', 'a').
  * @param {string} [className] - An optional classname to add to the element.
  * @param {string} [text] - The text content of the element.
+ * @param {object} [attributes] - An optional object of attributes to set on the element.
  * @returns {HTMLElement} The created DOM element.
  */
 
-export function createElement({ tag, className = "", text = "" }) {
-  const element = document.createElement(tag);
+export function createElement({
+  tag,
+  className = "",
+  text = "",
+  attributes = {},
+  ariaLabel = "",
+}) {
+  // SVG tags that need to be created in the SVG namespace
+  const svgTags = [
+    "svg",
+    "path",
+    "rect",
+    "circle",
+    "line",
+    "polygon",
+    "polyline",
+    "ellipse",
+    "g",
+    "text",
+    "tspan",
+    "defs",
+    "use",
+    "image",
+    "foreignObject",
+  ];
+
+  // Create SVG or HTML elements appropriately
+  const element = svgTags.includes(tag)
+    ? document.createElementNS("http://www.w3.org/2000/svg", tag)
+    : document.createElement(tag);
 
   if (className) {
-    element.classList.add(className);
+    // Split by space and filter out any empty strings to avoid adding empty class names - this allows for multiple classes to be added if provided as a space-separated string (used Boolean to check for truthy value, so it will work with empty strings, null, or undefined)
+    const classes = className.split(" ").filter(Boolean);
+    element.classList.add(...classes);
   }
 
   if (text) {
     element.textContent = text;
+  }
+
+  if (ariaLabel) {
+    element.setAttribute("aria-label", ariaLabel);
+  }
+
+  // Set attributes
+  for (const [key, value] of Object.entries(attributes)) {
+    element.setAttribute(key, value);
   }
 
   return element;
@@ -34,8 +74,8 @@ export function createElement({ tag, className = "", text = "" }) {
  * @return {HTMLAnchorElement} The created anchor element.
  */
 
-export function createExternalLink({ text, href, className = "" }) {
-  const link = createElement({ tag: "a", className, text });
+export function createExternalLink({ text, href, className = "", label = "" }) {
+  const link = createElement({ tag: "a", className, text, ariaLabel: label });
   link.href = href;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
@@ -69,65 +109,4 @@ export function createImage({ src, alt, className = "" }) {
   };
 
   return imageContainer;
-}
-
-/**
- * Creates a cluster of random of decorative squares around an element.
- * @param {HTMLElement} parent - the container to which the squares will be added.
- * @param {Object} options - Configuration options for the square cluster.
- */
-
-export function createSquareCluster(
-  parent,
-  { count = 20, gridSize = 20 } = {},
-) {
-  for (let i = 0; i < count; i++) {
-    const square = createElement({
-      tag: "div",
-      className: "decor--square-cluster",
-    });
-
-    // 1. Only pick Top (0), Right (1), or Left (3)
-    // skipped Bottom (2) to keep the effect at the top
-    const edges = [0, 1, 3];
-    const edge = edges[Math.floor(Math.random() * edges.length)];
-
-    const thickness = 5; // Tight clump range in %
-    const offset = Math.random() * thickness - thickness / 2;
-
-    let x, y;
-
-    if (edge === 0) {
-      // Top Edge
-      x = Math.random() * 100;
-      y = offset;
-    } else if (edge === 1) {
-      // Right Edge (Top Half Only)
-      x = 100 + offset;
-      y = Math.random() * 170;
-    } else {
-      // Left Edge (Top Half Only)
-      x = offset;
-      y = Math.random() * 100;
-    }
-
-    const size =
-      (Math.floor(Math.random() * 3) + 2) *
-      (gridSize / (Math.floor(Math.random() * 3) + 4));
-
-    // SAnitisation of the values
-    const xValue = Number(x);
-    const yValue = Number(y);
-    const sizeValue = Number(size);
-
-    // Specific assignement for better performance and API best practices
-    square.style.left = `${xValue}%`;
-    square.style.top = `${yValue}%`;
-    square.style.width = `${sizeValue}px`;
-    square.style.height = `${sizeValue}px`;
-    square.style.transform = "translate(-50%, -50%)";
-    square.style.opacity = Math.random() * 0.7 + 0.3;
-
-    parent.append(square);
-  }
 }

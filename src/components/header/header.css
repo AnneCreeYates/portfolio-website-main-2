@@ -3,8 +3,8 @@
 .header {
   width: 100%;
   height: fit-content;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
   /* to #818CF8; */
 }
 
@@ -13,10 +13,10 @@
 .nav__list {
   display: flex;
   list-style-type: none;
-  padding: 16px;
+  padding: var(--space-md);
   justify-content: space-around;
 
   li {
-    padding: 8px;
+    padding: var(--space-sm);
   }
 }

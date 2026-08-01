@@ -1,0 +1,96 @@
+/* Default theme styles */
+
+:root {
+  /* Palette (raw swatches) */
+  --palette-accent-400: #4ade80;
+  --palette-accent-500: #00bf30;
+  --palette-primary-500: #50cfab;
+  --palette-secondary-500: #04846a;
+  --palette-surface-glass: #010708;
+  --palette-surface-border: #3b775d;
+
+  /* Semantic tokens (site-level) */
+  --color-background: #020e0f;
+  --color-text: #fff;
+  --color-primary: var(--palette-accent-400);
+  --color-primary-glow: var(--palette-accent-500);
+  --color-secondary: var(--palette-secondary-500);
+  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Surface semantic token */
+:root {
+  --surface-glass: var(--palette-surface-glass);
+}
+
+/* Surface border and text white token for migration */
+:root {
+  --surface-border: var(--palette-surface-border);
+  --color-text-white: #fff;
+}
+
+/* Utilities: spacing, typography, radii */
+:root {
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+
+  --radius-base: 10px;
+}
+
+/* Button design tokens and base styles (theme-level defaults) */
+:root {
+  --button-text-color: var(--color-text);
+  --button-padding: 0.4rem 1rem;
+  --button-border-color: var(--color-primary-glow);
+  --button-border-width: 2px;
+  --button-border-radius: 10px;
+  --button-width: 50%;
+}
+
+/* Card tokens */
+:root {
+  --card-radius: 15px;
+  --card-gap: 1rem;
+  --card-content-padding: 0 2rem 2rem;
+  --card-image-width: 80%;
+  --card-title-font-size: 1.6rem;
+  --card-description-opacity: 0.7;
+  --card-links-gap: 1rem;
+  --card-links-top-margin: 1.25rem;
+}
+
+/* Body styles */
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+/* Button styles */
+
+.button {
+  color: var(--button-text-color);
+  text-decoration: none;
+  padding: var(--button-padding);
+  border: var(--button-border-width) solid var(--button-border-color);
+  border-radius: var(--button-border-radius);
+  /* width: var(--button-width); */
+  background-color: var();
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    background-color: var(--color-primary-glow);
+    color: var(--color-background);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
